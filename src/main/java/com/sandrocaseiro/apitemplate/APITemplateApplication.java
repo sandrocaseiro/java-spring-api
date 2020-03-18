@@ -5,12 +5,13 @@ import com.sandrocaseiro.apitemplate.properties.EndpointProperties;
 import com.sandrocaseiro.apitemplate.properties.JwtProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = ErrorMvcAutoConfiguration.class)
 @EnableFeignClients
 @EnableConfigurationProperties({CorsProperties.class, EndpointProperties.class, JwtProperties.class})
 public class APITemplateApplication extends SpringBootServletInitializer {
