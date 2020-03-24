@@ -1,9 +1,10 @@
-package com.sandrocaseiro.apitemplate.bdd;
+package com.sandrocaseiro.apitemplate.steps;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sandrocaseiro.apitemplate.models.domain.ERole;
 import com.sandrocaseiro.apitemplate.models.domain.EUser;
 import com.sandrocaseiro.apitemplate.repositories.UserRepository;
+import com.sandrocaseiro.apitemplate.states.TestState;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;

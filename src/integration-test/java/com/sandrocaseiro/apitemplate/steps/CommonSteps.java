@@ -1,6 +1,7 @@
-package com.sandrocaseiro.apitemplate.bdd;
+package com.sandrocaseiro.apitemplate.steps;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.sandrocaseiro.apitemplate.states.TestState;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.specification.RequestSpecification;

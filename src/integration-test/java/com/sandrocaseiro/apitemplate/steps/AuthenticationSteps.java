@@ -1,8 +1,9 @@
-package com.sandrocaseiro.apitemplate.bdd;
+package com.sandrocaseiro.apitemplate.steps;
 
 import com.sandrocaseiro.apitemplate.security.TokenAuthResponse;
 import com.sandrocaseiro.apitemplate.security.TokenUser;
 import com.sandrocaseiro.apitemplate.services.JwtAuthService;
+import com.sandrocaseiro.apitemplate.states.TestState;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;

@@ -12,7 +12,11 @@ logging:
         type: TRACE
       springframework:
         web: DEBUG
-    com.fiserv.apitemplate.clients: DEBUG
+    com.sandrocaseiro.apitemplate.clients: DEBUG
+
+server:
+  servlet:
+    context-path: /api
 
 spring:
   datasource:
