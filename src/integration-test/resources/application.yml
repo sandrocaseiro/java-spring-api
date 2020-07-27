@@ -7,19 +7,21 @@ cors:
 
 endpoints:
   api1:
-    base-url: http://localhost:8080/
+    base-url: http://localhost:8089/api
     password: 1234
     username: user1@mail.com
 
 feign:
+  connectTimeout: 5000
+  readTimeout: 5000
+  followRedirects: false
+  ignore-ssl: false
   client.config.default:
-    connectTimeout: 5000
     loggerLevel: basic
-    readTimeout: 5000
+    retryer: dev.sandrocaseiro.apitemplate.clients.retryers.NoRetryer
   compression:
     request.enabled: true
     response.enabled: true
-  httpclient.enabled: false
   okhttp.enabled: true
 
 info:
@@ -27,6 +29,7 @@ info:
     name: 'api-template'
     description: 'api-template'
     version: 'xxx'
+    id: 'ID-99999'
 
 jwt:
   expiration: 18000000
@@ -34,6 +37,9 @@ jwt:
   refresh-expiration: 18000000000000
   secret: "!$V?GLhtdE}HgLBkYnRw%YfJ$dM7,DP$6;E3T_?V28cU7D}Vwr;!TP4Nj.da"
   tokenPrefix: Bearer
+
+locale:
+  default: en-US
 
 management:
   endpoint:
@@ -71,6 +77,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.Oracle12cDialect
+        enable_lazy_load_no_trans: true
         proc:
           param_null_passing: true
         jdbc:
@@ -79,11 +86,15 @@ spring:
           time_zone: UTC
   liquibase:
     enabled: false
+  mvc:
+    throw-exception-if-no-handler-found: true
   output:
     ansi:
       enabled: ALWAYS
   profiles:
     active: test
+  resources:
+    add-mappings: false
   servlet:
     multipart:
       enabled: true

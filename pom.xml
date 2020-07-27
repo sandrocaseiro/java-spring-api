@@ -7,12 +7,12 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.4.RELEASE</version>
+        <version>2.3.1.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.sandrocaseiro</groupId>
+    <groupId>dev.sandrocaseiro</groupId>
     <artifactId>api-template</artifactId>
-    <version>1.1.0</version>
+    <version>2.0.0</version>
     <packaging>${packaging.type}</packaging>
     <name>api-template</name>
     <description>Java Spring Template API</description>
@@ -24,22 +24,23 @@
         <skipUnitTests>${skipTests}</skipUnitTests>
 
         <beanio.version>2.1.0</beanio.version>
-        <build-helper-plugin.version>3.1.0</build-helper-plugin.version>
-        <cucumber.version>5.4.0</cucumber.version>
-        <dependency-check-maven.version>5.3.0</dependency-check-maven.version>
-        <feign.version>10.7.4</feign.version>
-        <guava.version>28.2-jre</guava.version>
-        <hibernate-validator.version>5.4.3.Final</hibernate-validator.version>
+        <build-helper-plugin.version>3.2.0</build-helper-plugin.version>
+        <cucumber.version>6.2.2</cucumber.version>
+        <dependency-check-maven.version>5.3.2</dependency-check-maven.version>
+        <feign.version>10.10.1</feign.version>
+        <!-- Needed for RestAssured. Remove as soon Spring BOM is updated -->
+        <groovy.version>3.0.2</groovy.version>
+        <guava.version>29.0-jre</guava.version>
         <jacoco.version>0.8.5</jacoco.version>
-        <jjwt.version>0.9.1</jjwt.version>
-        <liquibase.version>3.8.7</liquibase.version>
-        <liquibase-maven.version>3.8.0</liquibase-maven.version>
+        <jjwt.version>0.11.2</jjwt.version>
         <mapstruct.version>1.3.1.Final</mapstruct.version>
-        <maven-failsafe.version>3.0.0-M4</maven-failsafe.version>
-        <rest-assured.version>4.2.0</rest-assured.version>
+        <maven-failsafe.version>3.0.0-M5</maven-failsafe.version>
+        <rest-assured.version>4.3.1</rest-assured.version>
         <sonar.version>3.7.0.1746</sonar.version>
-        <spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
-        <swagger2.version>2.9.2</swagger2.version>
+        <!-- If you need to set Feign Headers dynamically, use Hoxton.SR4 -->
+        <spring-cloud.version>Hoxton.SR6</spring-cloud.version>
+        <springdoc-openapi.version>1.4.2</springdoc-openapi.version>
+        <wiremock.version>2.27.0</wiremock.version>
     </properties>
 
     <dependencyManagement>
@@ -62,29 +63,34 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <!-- Needed for Widlfly 9 -->
             <exclusions>
-                <exclusion>
-                    <groupId>org.hibernate.validator</groupId>
-                    <artifactId>hibernate-validator</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>jakarta.validation</groupId>
-                    <artifactId>jakarta.validation-api</artifactId>
-                </exclusion>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-undertow</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -95,6 +101,10 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-jackson</artifactId>
         </dependency>
@@ -103,19 +113,19 @@
             <artifactId>feign-okhttp</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.oracle.ojdbc</groupId>
+            <groupId>com.oracle.database.jdbc</groupId>
             <artifactId>ojdbc8</artifactId>
             <scope>runtime</scope>
         </dependency>
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${swagger2.version}</version>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${springdoc-openapi.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${swagger2.version}</version>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-security</artifactId>
+            <version>${springdoc-openapi.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -124,8 +134,20 @@
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
+            <artifactId>jjwt-api</artifactId>
             <version>${jjwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -143,16 +165,10 @@
             <version>${beanio.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
-            <version>${liquibase.version}</version>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
         </dependency>
-        <!-- Needed for Widlfly 9 -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>${hibernate-validator.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -171,7 +187,7 @@
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-java</artifactId>
+            <artifactId>cucumber-java8</artifactId>
             <version>${cucumber.version}</version>
             <scope>test</scope>
         </dependency>
@@ -192,31 +208,13 @@
             <artifactId>rest-assured</artifactId>
             <version>${rest-assured.version}</version>
             <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.rest-assured</groupId>
-                    <artifactId>json-path</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>io.rest-assured</groupId>
-                    <artifactId>xml-path</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>json-path</artifactId>
-            <version>${rest-assured.version}</version>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock-jre8</artifactId>
+            <version>${wiremock.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>xml-path</artifactId>
-            <version>${rest-assured.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-
     </dependencies>
 
     <build>
@@ -325,18 +323,6 @@
                     <artifactId>h2</artifactId>
                 </dependency>
             </dependencies>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.liquibase</groupId>
-                        <artifactId>liquibase-maven-plugin</artifactId>
-                        <version>3.8.0</version>
-                        <configuration>
-                            <propertyFile>src/main/resources/liquibase.properties</propertyFile>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
         </profile>
         <profile>
             <id>test</id>
@@ -352,27 +338,11 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.liquibase</groupId>
-                        <artifactId>liquibase-maven-plugin</artifactId>
-                        <version>${liquibase-maven.version}</version>
-                        <configuration>
-                            <propertyFile>src/main/resources/liquibase.properties</propertyFile>
-                        </configuration>
-                    </plugin>
-                    <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-failsafe-plugin</artifactId>
                         <version>${maven-failsafe.version}</version>
-                        <configuration>
-                            <skip>false</skip>
-                            <includes>
-                                <include>**/*IT.java</include>
-                            </includes>
-                        </configuration>
                         <executions>
                             <execution>
-                                <id>failsafe-integration-tests</id>
-                                <phase>integration-test</phase>
                                 <goals>
                                     <goal>integration-test</goal>
                                     <goal>verify</goal>

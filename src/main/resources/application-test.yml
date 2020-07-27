@@ -1,6 +1,10 @@
+feign:
+  client.config.default:
+    loggerLevel: FULL
+
 logging:
   level:
-    root: OFF
+    root: INFO
 
 spring:
   datasource:
@@ -14,9 +18,10 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
         default_schema: template
-  liquibase:
-    change-log: classpath:changelog-test.xml
+  flyway:
     enabled: true
-    liquibase-schema: template
+    clean-disabled: false
+    schemas: TEMPLATE
+    locations: classpath:db/migration/common,classpath:db/migration/test
   main:
     banner-mode: OFF

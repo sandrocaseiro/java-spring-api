@@ -12,14 +12,19 @@ endpoints:
     username: user1@mail.com
 
 feign:
-  client.config.default:
-    connectTimeout: 5000
-    loggerLevel: basic
-    readTimeout: 5000
+  #The next attributes are handled manually, as there is a bug when setting timeouts and disabling follow redirects
+  connectTimeout: 5000
+  readTimeout: 5000
+  followRedirects: false
+  ignore-ssl: false
+  #end
+  client.config:
+    default:
+      loggerLevel: BASIC
+      retryer: dev.sandrocaseiro.apitemplate.clients.retryers.NoRetryer
   compression:
     request.enabled: true
     response.enabled: true
-  httpclient.enabled: false
   okhttp.enabled: true
 
 info:
@@ -27,13 +32,20 @@ info:
     name: @project.name@
     description: @project.description@
     version: @project.version@
+    id: ID-99999
 
 jwt:
   expiration: 18000000
   header: Authorization
   refresh-expiration: 18000000000000
-  secret: "!$V?GLhtdE}HgLBkYnRw%YfJ$dM7,DP$6;E3T_?V28cU7D}Vwr;!TP4Nj.da"
+  secret: "!$V?GLhtdE}HgLBkYnRw%YfJ$dM7,DP$6;E3T_xV28cU7D}Vwr;!TP4Nj.da"
   tokenPrefix: Bearer
+
+locale:
+  default: en-US
+
+logging:
+  config: classpath:logs/log4j2-spring.xml
 
 management:
   endpoint:
@@ -60,6 +72,8 @@ spring:
     encoding:
       charset: UTF-8
       force: true
+  flyway:
+    enabled: false
   jmx:
     enabled: false
   jpa:
@@ -77,15 +91,22 @@ spring:
           lob:
             non_contextual_creation: true
           time_zone: UTC
-  liquibase:
-    enabled: false
+  mvc:
+    throw-exception-if-no-handler-found: true
   output:
     ansi:
       enabled: ALWAYS
   profiles:
     active: @activeProfile@
+  resources:
+    add-mappings: false
   servlet:
     multipart:
       enabled: true
       max-file-size: 4MB
       max-request-size: 6MB
+
+springdoc:
+  show-actuator: true
+  default-produces-media-type: application/json
+  writer-with-default-pretty-printer: true
