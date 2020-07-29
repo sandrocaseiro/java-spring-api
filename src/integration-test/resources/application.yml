@@ -18,7 +18,6 @@ feign:
   ignore-ssl: false
   client.config.default:
     loggerLevel: basic
-    retryer: dev.sandrocaseiro.apitemplate.clients.retryers.NoRetryer
   compression:
     request.enabled: true
     response.enabled: true
@@ -84,8 +83,6 @@ spring:
           lob:
             non_contextual_creation: true
           time_zone: UTC
-  liquibase:
-    enabled: false
   mvc:
     throw-exception-if-no-handler-found: true
   output:

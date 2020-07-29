@@ -21,7 +21,6 @@ feign:
   client.config:
     default:
       loggerLevel: BASIC
-      retryer: dev.sandrocaseiro.apitemplate.clients.retryers.NoRetryer
   compression:
     request.enabled: true
     response.enabled: true

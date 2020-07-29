@@ -11,4 +11,4 @@ Feature: Service should provide a user report endpoint
     When I GET to '/v1/users/report'
     Then I should receive the status code 200
     And The response data should have 4 items
-    And The response should have a 'data[0].balanceAmount' property containing 'BRL'
+    And The response should have a 'data[0].balance' property containing 'USD'

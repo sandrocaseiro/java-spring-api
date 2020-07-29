@@ -1,10 +1,9 @@
 feign:
   client.config.default:
-    loggerLevel: FULL
+    loggerLevel: basic
 
 logging:
-  level:
-    root: INFO
+  config: classpath:logs/log4j2-spring.dev.xml
 
 spring:
   datasource:
