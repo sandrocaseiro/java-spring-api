@@ -8,6 +8,7 @@ import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.test.context.ActiveProfiles;
 
 import static io.restassured.config.EncoderConfig.encoderConfig;
 import static io.restassured.config.LogConfig.logConfig;
@@ -15,8 +16,10 @@ import static io.restassured.config.RestAssuredConfig.config;
 
 @CucumberContextConfiguration
 @SpringBootTest(
-    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
+    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+    properties = {"isTest=true"}
 )
+@ActiveProfiles("test")
 public abstract class BaseSteps {
     @LocalServerPort
     public int port;

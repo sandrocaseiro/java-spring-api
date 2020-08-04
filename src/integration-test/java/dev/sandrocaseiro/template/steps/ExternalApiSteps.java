@@ -13,7 +13,7 @@ public class ExternalApiSteps extends BaseSteps implements En {
 
         Given("External API is not working", this::stubNotWorking);
 
-        Given("External API is working", this::stubIsWorking);
+        Given("External API is working", ExternalApiSteps::stubIsWorking);
     }
 
     public void stubNotWorking() {
@@ -27,7 +27,7 @@ public class ExternalApiSteps extends BaseSteps implements En {
         );
     }
 
-    public void stubIsWorking() {
+    public static void stubIsWorking() {
         stubFor(
             post(urlPathMatching("/api/.*/token$"))
                 .atPriority(1)
