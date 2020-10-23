@@ -8,9 +8,9 @@ import java.util.HashSet;
 @AllArgsConstructor
 @Getter
 public class UserPrincipal {
-    private int id;
-    private String name;
-    private String email;
-    private int groupId;
-    private HashSet<Integer> roles;
+    private final int id;
+    private final String name;
+    private final String email;
+    private final int groupId;
+    private final HashSet<Integer> roles;
 }

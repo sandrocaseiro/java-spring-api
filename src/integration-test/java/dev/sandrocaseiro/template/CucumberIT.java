@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
     features = "src/integration-test/resources/features",
     monochrome = true,
-    plugin = {"pretty", "html:target/cucumber"})
+    plugin = {"pretty", "html:target/cucumber/index.html"})
 public class CucumberIT {
 
 }

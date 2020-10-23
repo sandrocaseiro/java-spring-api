@@ -1,7 +1,9 @@
 package dev.sandrocaseiro.template;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.common.Slf4jNotifier;
 import dev.sandrocaseiro.template.steps.ExternalApiSteps;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -13,6 +15,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.configureFor;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 
 @Component
+@Log4j2
 public class MockServer {
     public final WireMockServer mockServer;
     @Autowired
@@ -23,9 +26,11 @@ public class MockServer {
             options()
                 .port(8089)
                 .usingFilesUnderClasspath("mocks")
+                .notifier(new Slf4jNotifier(true))
         );
         mockServer.start();
         configureFor(mockServer.port());
+        log.info("Started Wiremock");
     }
 
     public void reset() {
