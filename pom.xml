@@ -39,7 +39,7 @@
         <!-- If you need to set Feign Headers dynamically, use Hoxton.SR4 -->
         <spring-cloud.version>Hoxton.SR6</spring-cloud.version>
         <springdoc-openapi.version>1.4.3</springdoc-openapi.version>
-        <wiremock.version>2.27.0</wiremock.version>
+        <wiremock.version>2.35.1</wiremock.version>
     </properties>
 
     <dependencyManagement>
